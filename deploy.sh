@@ -4,4 +4,4 @@ cd $REPOSITORY
 
 sudo npm install
 
-sudo pm2 reload all
+pm2 start npm --name billeasy -- run start || pm2 reload billeasy
