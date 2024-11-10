@@ -2,14 +2,15 @@ module.exports = {
   apps: [
     {
       name: "billeasy",
-      script: "node_modules/next/dist/bin/next",
-      args: "start -p 3001",
-      cwd: "./",
-      instances: 1,
+      script: "./node_modules/next/dist/bin/next",
+      args: "start",
+      exec_mode: "cluster",
+      instances: 2,
       autorestart: true,
-      exec_mode: "fork",
-      listen_timeout: 50000,
-      kill_timeout: 5000,
+      watch: true,
+      env: {
+        NODE_ENV: "production",
+      },
     },
   ],
 };
