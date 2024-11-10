@@ -5,14 +5,14 @@ on:
       - main
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
       - name: Check Node v
         run: node -v
       - name: Install Dependencies
-        run: npm install --frozen-lockfile
+        run: npm install
       - name: Build
         run: npm run build
       - name: zip create
@@ -28,8 +28,9 @@ jobs:
         run: |
           aws s3 cp --region ap-northeast-2 ./build.zip s3://gtmk-bucket/build.zip
       - name: Deploy
-        run: aws deploy create-deployment
-          --application-name gtmk-front-code-deploy
-          --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name gtmk-front-code-deploy
-          --s3-location bucket=gtmk-bucket,bundleType=zip,key=build.zip
+        run: |
+          aws deploy create-deployment \
+            --application-name gtmk-front-code-deploy \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name gtmk-front-code-deploy \
+            --s3-location bucket=gtmk-bucket,bundleType=zip,key=build.zip
