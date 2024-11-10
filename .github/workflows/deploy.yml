@@ -31,5 +31,5 @@ jobs:
         run: aws deploy create-deployment
           --application-name gtmk-front-code-deploy
           --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name gtmk-code-deploy-group
+          --deployment-group-name gtmk-front-code-deploy
           --s3-location bucket=gtmk-bucket,bundleType=zip,key=build.zip
