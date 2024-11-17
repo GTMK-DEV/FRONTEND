@@ -1,0 +1,32 @@
+{
+  "background_color": "#232323",
+  "description": "BillEasy:수기장부를 더 간편하게",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "BillEasy",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "BillEasy",
+  "start_url": "/",
+  "theme_color": "#232323",
+  "icons": [
+    {
+      "src": "/images/icons/billeasy.ico",
+      "sizes": "144x144 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icons/Icon_(192x192).png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon_(512x512).png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}
