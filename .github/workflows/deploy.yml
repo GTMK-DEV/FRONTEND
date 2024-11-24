@@ -3,30 +3,55 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout source code.
+      # 1. 소스 코드 체크아웃
+      - name: Checkout source code
         uses: actions/checkout@v2
-      - name: Check Node v
+
+      # 2. Node.js 버전 확인
+      - name: Check Node.js version
         run: node -v
+
+      # 3. 캐시 종속성
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 4. 종속성 설치
       - name: Install Dependencies
         run: npm install
+
+      # 5. 빌드
       - name: Build
         run: npm run build
-      - name: zip create
+
+      # 6. 빌드 결과 압축
+      - name: Create ZIP of Build
         run: zip -qq -r ./build.zip .
         shell: bash
+
+      # 7. AWS 인증 정보 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      # 8. S3에 빌드 업로드
       - name: Upload to S3
         run: |
           aws s3 cp --region ap-northeast-2 ./build.zip s3://gtmk-bucket/build.zip
+
+      # 9. AWS CodeDeploy를 사용해 배포
       - name: Deploy
         run: |
           aws deploy create-deployment \
