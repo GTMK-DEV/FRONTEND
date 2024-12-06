@@ -6,6 +6,7 @@ body {
   width: 32rem;
   height: 100vh;
   min-width: 350px;
+  padding: 0 20px;
   background-color: #222222;
   color: #ffffff;
 }
